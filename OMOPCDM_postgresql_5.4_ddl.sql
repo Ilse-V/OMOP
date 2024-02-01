@@ -1,11 +1,4 @@
--- Drop schema and dependencies
-DROP SCHEMA IF EXISTS omopcdm CASCADE;
-
-CREATE SCHEMA IF NOT EXISTS omopcdm;
-CREATE SCHEMA IF NOT EXISTS temp;
-CREATE SCHEMA IF NOT EXISTS results;
-
-
+--postgresql CDM DDL Specification for OMOP Common Data Model 5.4 modified by IKNL
 --HINT DISTRIBUTE ON RANDOM
  CREATE TABLE IF NOT EXISTS  omopcdm.CONCEPT (
 			concept_id integer NOT NULL,
