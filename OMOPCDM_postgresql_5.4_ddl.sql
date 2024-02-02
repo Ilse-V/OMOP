@@ -73,7 +73,7 @@
 			target_vocabulary_id varchar(20) NOT NULL,
 			valid_start_date date NOT NULL,
 			valid_end_date date NOT NULL,
-			invalid_reason varchar(1) NULL );
+			invalid_reason varchar(3) NULL );
 
 --HINT DISTRIBUTE ON RANDOM
  CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.drug_strength (
