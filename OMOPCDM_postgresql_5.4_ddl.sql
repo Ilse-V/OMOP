@@ -1,6 +1,6 @@
 --postgresql CDM DDL Specification for OMOP Common Data Model 5.4 modified by IKNL
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.CONCEPT (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.concept (
 			concept_id integer NOT NULL,
 			concept_name varchar(255) NOT NULL,
 			domain_id varchar(20) NOT NULL,
@@ -13,7 +13,7 @@
 			invalid_reason varchar(1) NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.VOCABULARY (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.vocabulary (
 			vocabulary_id varchar(20) NOT NULL,
 			vocabulary_name varchar(255) NOT NULL,
 			vocabulary_reference varchar(255) NULL,
@@ -21,19 +21,19 @@
 			vocabulary_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.DOMAIN (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.domain (
 			domain_id varchar(20) NOT NULL,
 			domain_name varchar(255) NOT NULL,
 			domain_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.CONCEPT_CLASS (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.concept_class (
 			concept_class_id varchar(20) NOT NULL,
 			concept_class_name varchar(255) NOT NULL,
 			concept_class_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.CONCEPT_RELATIONSHIP (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.concept_relationship (
 			concept_id_1 integer NOT NULL,
 			concept_id_2 integer NOT NULL,
 			relationship_id varchar(20) NOT NULL,
@@ -42,7 +42,7 @@
 			invalid_reason varchar(1) NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.RELATIONSHIP (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.relationship (
 			relationship_id varchar(20) NOT NULL,
 			relationship_name varchar(255) NOT NULL,
 			is_hierarchical varchar(1) NOT NULL,
@@ -51,20 +51,20 @@
 			relationship_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.CONCEPT_SYNONYM (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.concept_synonym (
 			concept_id integer NOT NULL,
 			concept_synonym_name varchar(1000) NOT NULL,
 			language_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.CONCEPT_ANCESTOR (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.concept_ancestor (
 			ancestor_concept_id integer NOT NULL,
 			descendant_concept_id integer NOT NULL,
 			min_levels_of_separation integer NOT NULL,
 			max_levels_of_separation integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.SOURCE_TO_CONCEPT_MAP (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.source_to_concept_map (
 			source_code varchar(50) NOT NULL,
 			source_concept_id integer NOT NULL,
 			source_vocabulary_id varchar(20) NOT NULL,
@@ -76,7 +76,7 @@
 			invalid_reason varchar(1) NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.DRUG_STRENGTH (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.drug_strength (
 			drug_concept_id integer NOT NULL,
 			ingredient_concept_id integer NOT NULL,
 			amount_value NUMERIC NULL,
@@ -91,14 +91,14 @@
 			invalid_reason varchar(1) NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS omopcdm.COHORT (
+CREATE TABLE IF NOT EXISTS @cdmDatabaseSchema.cohort (
 			cohort_definition_id integer NOT NULL,
 			subject_id integer NOT NULL,
 			cohort_start_date date NOT NULL,
 			cohort_end_date date NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
- CREATE TABLE IF NOT EXISTS  omopcdm.COHORT_DEFINITION (
+ CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.cohort_definition (
 			cohort_definition_id integer NOT NULL,
 			cohort_definition_name varchar(255) NOT NULL,
 			cohort_definition_description TEXT NULL,
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS omopcdm.COHORT (
 			cohort_initiation_date date NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.PERSON (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.person (
 			person_id integer NOT NULL,
 			gender_concept_id integer NOT NULL,
 			year_of_birth integer NOT NULL,
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.PERSON (
 			ethnicity_source_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.OBSERVATION_PERIOD (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.observation_period (
 			observation_period_id integer NOT NULL,
 			person_id integer NOT NULL,
 			observation_period_start_date date NOT NULL,
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.OBSERVATION_PERIOD (
 			period_type_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.VISIT_OCCURRENCE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.visit_occurrence (
 			visit_occurrence_id integer NOT NULL,
 			person_id integer NOT NULL,
 			visit_concept_id integer NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.VISIT_OCCURRENCE (
 			preceding_visit_occurrence_id integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.VISIT_DETAIL (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.visit_detail (
 			visit_detail_id integer NOT NULL,
 			person_id integer NOT NULL,
 			visit_detail_concept_id integer NOT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.VISIT_DETAIL (
 			visit_occurrence_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.CONDITION_OCCURRENCE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.condition_occurrence (
 			condition_occurrence_id integer NOT NULL,
 			person_id integer NOT NULL,
 			condition_concept_id integer NOT NULL,
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.CONDITION_OCCURRENCE (
 			cond_event_field_concept_id integer NULL);
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.DRUG_EXPOSURE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.drug_exposure (
 			drug_exposure_id integer NOT NULL,
 			person_id integer NOT NULL,
 			drug_concept_id integer NOT NULL,
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.DRUG_EXPOSURE (
 			drug_event_field_concept_id integer NULL);
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.PROCEDURE_OCCURRENCE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.procedure_occurrence (
 			procedure_occurrence_id integer NOT NULL,
 			person_id integer NOT NULL,
 			procedure_concept_id integer NOT NULL,
@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.PROCEDURE_OCCURRENCE (
 			proc_event_field_concept_id integer NULL);
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.DEVICE_EXPOSURE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.device_exposure (
 			device_exposure_id integer NOT NULL,
 			person_id integer NOT NULL,
 			device_concept_id integer NOT NULL,
@@ -273,7 +273,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.DEVICE_EXPOSURE (
 			dev_event_field_concept_id integer NULL);
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.MEASUREMENT (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.measurement (
 			measurement_id integer NOT NULL,
 			person_id integer NOT NULL,
 			measurement_concept_id integer NOT NULL,
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.MEASUREMENT (
 			meas_event_field_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.OBSERVATION (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.observation (
 			observation_id integer NOT NULL,
 			person_id integer NOT NULL,
 			observation_concept_id integer NOT NULL,
@@ -323,7 +323,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.OBSERVATION (
 			obs_event_field_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.DEATH (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.death (
 			person_id integer NOT NULL,
 			death_date date NOT NULL,
 			death_datetime TIMESTAMP NULL,
@@ -333,7 +333,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.DEATH (
 			cause_source_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.NOTE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.note (
 			note_id integer NOT NULL,
 			person_id integer NOT NULL,
 			note_date date NOT NULL,
@@ -352,7 +352,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.NOTE (
 			note_event_field_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.NOTE_NLP (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.note_nlp (
 			note_nlp_id integer NOT NULL,
 			note_id integer NOT NULL,
 			section_concept_id integer NULL,
@@ -369,7 +369,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.NOTE_NLP (
 			term_modifiers varchar(2000) NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.SPECIMEN (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.specimen (
 			specimen_id integer NOT NULL,
 			person_id integer NOT NULL,
 			specimen_concept_id integer NOT NULL,
@@ -389,7 +389,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.SPECIMEN (
 			spec_event_field_concept_id integer NULL);
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.FACT_RELATIONSHIP (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.fact_relationship (
 			domain_concept_id_1 integer NOT NULL,
 			fact_id_1 integer NOT NULL,
 			domain_concept_id_2 integer NOT NULL,
@@ -397,7 +397,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.FACT_RELATIONSHIP (
 			relationship_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.LOCATION (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.location (
 			location_id integer NOT NULL,
 			address_1 varchar(50) NULL,
 			address_2 varchar(50) NULL,
@@ -412,7 +412,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.LOCATION (
 			longitude NUMERIC NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.CARE_SITE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.care_site (
 			care_site_id integer NOT NULL,
 			care_site_name varchar(255) NULL,
 			place_of_service_concept_id integer NULL,
@@ -421,7 +421,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.CARE_SITE (
 			place_of_service_source_value varchar(50) NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.PROVIDER (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.provider (
 			provider_id integer NOT NULL,
 			provider_name varchar(255) NULL,
 			npi varchar(20) NULL,
@@ -437,7 +437,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.PROVIDER (
 			gender_source_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.PAYER_PLAN_PERIOD (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.payer_plan_period (
 			payer_plan_period_id integer NOT NULL,
 			person_id integer NOT NULL,
 			payer_plan_period_start_date date NOT NULL,
@@ -457,7 +457,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.PAYER_PLAN_PERIOD (
 			stop_reason_source_concept_id integer NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.COST (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.cost (
 			cost_id integer NOT NULL,
 			cost_event_id integer NOT NULL,
 			cost_domain_id varchar(20) NOT NULL,
@@ -482,7 +482,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.COST (
 			drg_source_value varchar(3) NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.DRUG_ERA (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.drug_era (
 			drug_era_id integer NOT NULL,
 			person_id integer NOT NULL,
 			drug_concept_id integer NOT NULL,
@@ -492,7 +492,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.DRUG_ERA (
 			gap_days integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.DOSE_ERA (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.dose_era (
 			dose_era_id integer NOT NULL,
 			person_id integer NOT NULL,
 			drug_concept_id integer NOT NULL,
@@ -502,7 +502,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.DOSE_ERA (
 			dose_era_end_date TIMESTAMP NOT NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.CONDITION_ERA (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.condition_era (
 			condition_era_id integer NOT NULL,
 			person_id integer NOT NULL,
 			condition_concept_id integer NOT NULL,
@@ -511,7 +511,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.CONDITION_ERA (
 			condition_occurrence_count integer NULL );
 
 --HINT DISTRIBUTE ON KEY (person_id)
-CREATE TABLE IF NOT EXISTS  omopcdm.EPISODE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.episode (
 			episode_id integer NOT NULL,
 			person_id integer NOT NULL,
 			episode_concept_id integer NOT NULL,
@@ -528,13 +528,13 @@ CREATE TABLE IF NOT EXISTS  omopcdm.EPISODE (
 			episode_source_iknl integer NULL);
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.EPISODE_EVENT (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.episode_event (
 			episode_id integer NOT NULL,
 			event_id integer NOT NULL,
 			episode_event_field_concept_id integer NOT NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.METADATA (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.metadata (
 			metadata_id integer NOT NULL,
 			metadata_concept_id integer NOT NULL,
 			metadata_type_concept_id integer NOT NULL,
@@ -546,7 +546,7 @@ CREATE TABLE IF NOT EXISTS  omopcdm.METADATA (
 			metadata_datetime TIMESTAMP NULL );
 
 --HINT DISTRIBUTE ON RANDOM
-CREATE TABLE IF NOT EXISTS  omopcdm.CDM_SOURCE (
+CREATE TABLE IF NOT EXISTS  @cdmDatabaseSchema.cdm_source (
 			cdm_source_name varchar(255) NOT NULL,
 			cdm_source_abbreviation varchar(25) NOT NULL,
 			cdm_holder varchar(255) NOT NULL,
